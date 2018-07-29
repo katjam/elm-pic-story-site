@@ -34,6 +34,3 @@ We're using [elm-format](https://github.com/avh4/elm-format) to standardise form
 ## Deployment
 - Build to `dist\` with `yarn build`
 - Push `dist\*` to gh-pages branch
-
-## Docker
-See [DOCKER.md](DOCKER.md)
