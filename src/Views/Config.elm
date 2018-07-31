@@ -13,9 +13,9 @@ email =
 
 helpline : String
 helpline =
-    "0000000000000"
+    "0000000000"
 
 
 helplineDisplay : String
 helplineDisplay =
-    "00000" ++ " " ++ "000" ++ " " ++ "000"
+    "0000" ++ "\x00A0" ++ "000" ++ "\x00A0" ++ "000"
