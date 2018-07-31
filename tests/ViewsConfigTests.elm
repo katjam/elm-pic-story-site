@@ -11,12 +11,12 @@ all =
         [ describe "Constants"
             [ test "App title" <|
                 \() ->
-                    appTitle |> Expect.equal "You Matter"
+                    appTitle |> Expect.equal "Pics, stories & info"
             , test "Helpline phone number" <|
                 \() ->
-                    helpline |> Expect.equal "08000194400"
+                    helpline |> Expect.equal "0000000000"
             , test "Helpline phone number display" <|
                 \() ->
-                    helplineDisplay |> Expect.equal ("08000" ++ "\x00A0" ++ "194" ++ "\x00A0" ++ "400")
+                    helplineDisplay |> Expect.equal ("0000" ++ "\x00A0" ++ "000" ++ "\x00A0" ++ "000")
             ]
         ]

@@ -2,17 +2,13 @@ module StoryDeck exposing (card, getInfoButtons, storyRelatedInfo, storyTeaser, 
 
 import Array
 import Assets exposing (AssetPath(..), path)
-import Html exposing (Html, a, blockquote, div, h3, img, li, p, span, text, ul)
+import Html exposing (Html, a, blockquote, div, h3, img, p, text)
 import Html.Attributes exposing (alt, class, href, src)
 import Html.Events exposing (onClick)
 import Icon exposing (getIcon)
 import Info exposing (getInfo)
 import List
 import Messages exposing (Msg(ButtonPress))
-
-
-type StoryDeck
-    = StoryDeck Deck
 
 
 type alias Deck =
@@ -56,30 +52,32 @@ storyTeaserImgAltText deckId =
 storyTeaser : Int -> Html Msg
 storyTeaser deckId =
     div [ class "card" ]
-        [ a [ href ("#/stories/" ++ (toString deckId))
+        [ a
+            [ href ("#/stories/" ++ toString deckId)
             , onClick (ButtonPress "story" "view-single" (storyTitle deckId) False)
             ]
             [ img [ class "card--thumbnail", src (storyTeaserImgPath deckId), alt (storyTeaserImgAltText deckId) ] []
             ]
-        , a [ class "link--unstyled"
-            , href ("#/stories/" ++ (toString deckId))
+        , a
+            [ class "link--unstyled"
+            , href ("#/stories/" ++ toString deckId)
             , onClick (ButtonPress "story" "view-single" (storyTitle deckId) False)
             ]
             [ h3 [ class "title--small" ] [ text (storyTitle deckId) ]
             ]
         , blockquote [ class "card--quote" ]
-            [ text ((getDeck deckId decks).teaser) ]
+            [ text (getDeck deckId decks).teaser ]
         , div [ class "text-right text-with-icon--right stories--more-link" ]
             [ a
                 [ class "link"
-                , href ("#/stories/" ++ (toString deckId))
+                , href ("#/stories/" ++ toString deckId)
                 , onClick (ButtonPress "story" "view-single" (storyTitle deckId) False)
                 ]
-                [ text ("See " ++ (storyTitle deckId) ++ "'s Story")
+                [ text ("See " ++ storyTitle deckId ++ "'s Story")
                 ]
             , a
                 [ class "link--unstyled"
-                , href ("#/stories/" ++ (toString deckId))
+                , href ("#/stories/" ++ toString deckId)
                 , onClick (ButtonPress "story" "view-single" (storyTitle deckId) False)
                 ]
                 [ getIcon "arrow-right" (Just "icon--alternate")
@@ -90,23 +88,24 @@ storyTeaser deckId =
 
 storyRelatedInfo : Int -> List (Html Msg)
 storyRelatedInfo deckId =
-    (List.map getInfoButtons (getRelatedInfo deckId))
+    List.map getInfoButtons (getRelatedInfo deckId)
 
 
 getInfoButtons : Int -> Html Msg
 getInfoButtons id =
-    a [ href ("#/info-to-help/" ++ (getInfo id).slug)
-      , class "button button--alternate button--full-width"
-      , onClick (ButtonPress "information" "view-single" (getInfo id).slug True)
-      ]
-      [ text (getInfo id).name ]
+    a
+        [ href ("#/info-to-help/" ++ (getInfo id).slug)
+        , class "button button--alternate button--full-width"
+        , onClick (ButtonPress "information" "view-single" (getInfo id).slug True)
+        ]
+        [ text (getInfo id).name ]
 
 
 card : Int -> Int -> Html msg
 card deckId cardId =
     div [ class "card story" ]
         [ h3 [ class "title--small title--alternate" ]
-            [ text ("Part " ++ (toString cardId) ++ " of 4") ]
+            [ text ("Part " ++ toString cardId ++ " of 4") ]
         , blockquote [ class "card--quote quote" ]
             [ text (getCard deckId cardId).quoteText ]
         , div [ class "story--illustration" ]
@@ -134,11 +133,8 @@ cardMessage deckId cardId =
 
 cardImgPath : Int -> Int -> String
 cardImgPath deckId cardId =
-    path ((getCard deckId cardId).imagePath)
+    path (getCard deckId cardId).imagePath
 
-
-
--- Todo create Dict for message strings
 
 
 -- Helpers to get card and deck records
@@ -191,7 +187,7 @@ placeholderDeck =
     { id = 0
     , title = "Coming soon"
     , teaser = "We're working on it"
-    , teaserImgPath = AssetPath ("story_images/thumb_placeholder.png")
+    , teaserImgPath = AssetPath "story_images/thumb_placeholder.png"
     , teaserImgAltText = "Placeholder image"
     , relatedInfo = [ 1 ]
     , cards = [ placeholderCard ]
@@ -201,7 +197,7 @@ placeholderDeck =
 placeholderCard : Card
 placeholderCard =
     { quoteText = "Story coming soon."
-    , imagePath = AssetPath ("story_images/slide1.svg")
+    , imagePath = AssetPath "story_images/slide1.svg"
     , altText = "Placeholder image"
     , messageText = Just "Check back soon"
     }
@@ -216,35 +212,35 @@ decks =
     [ { id = 1
       , title = "A story about rivers"
       , teaser = "The rivers run wide and deep."
-      , teaserImgPath = AssetPath ("story_images/thumb_placeholder.png")
+      , teaserImgPath = AssetPath "story_images/thumb_placeholder.png"
       , teaserImgAltText = "Some text that describes the teaser image."
       , relatedInfo = [ 2, 5 ]
       , cards =
             [ { quoteText =
                     """Something inspiring about rivers.
                     """
-              , imagePath = AssetPath ("story_images/slide1.svg")
+              , imagePath = AssetPath "story_images/slide1.svg"
               , altText = "Some text that describes the image"
               , messageText = Nothing
               }
             , { quoteText =
                     """Something suprising about rivers.
                     """
-              , imagePath = AssetPath ("story_images/slide2.svg")
+              , imagePath = AssetPath "story_images/slide2.svg"
               , altText = "Some text that describes the image."
               , messageText = Just "Caption text."
               }
             , { quoteText =
                     """Something magical about rivers.
                     """
-              , imagePath = AssetPath ("story_images/slide3.svg")
+              , imagePath = AssetPath "story_images/slide3.svg"
               , altText = "Some text that describes the image."
               , messageText = Nothing
               }
             , { quoteText =
                     """Something interesting about rivers.
                     """
-              , imagePath = AssetPath ("story_images/slide4.svg")
+              , imagePath = AssetPath "story_images/slide4.svg"
               , altText = "Some text that describes the image."
               , messageText = Nothing
               }
@@ -253,75 +249,75 @@ decks =
     , { id = 2
       , title = "A story about trees"
       , teaser = "The trees are not in a row."
-      , teaserImgPath = AssetPath ("story_images/thumb_placeholder.png")
+      , teaserImgPath = AssetPath "story_images/thumb_placeholder.png"
       , teaserImgAltText = "Some text that describes the teaser image."
       , relatedInfo = [ 2, 5 ]
       , cards =
             [ { quoteText =
                     """Something inspiring about trees.
                     """
-              , imagePath = AssetPath ("story_images/slide1.svg")
+              , imagePath = AssetPath "story_images/slide1.svg"
               , altText = "Some text that describes the image"
               , messageText = Nothing
               }
             , { quoteText =
                     """Something suprising about trees.
                     """
-              , imagePath = AssetPath ("story_images/slide2.svg")
+              , imagePath = AssetPath "story_images/slide2.svg"
               , altText = "Some text that describes the image."
               , messageText = Just "Caption text."
               }
             , { quoteText =
                     """Something magical about trees.
                     """
-              , imagePath = AssetPath ("story_images/slide3.svg")
+              , imagePath = AssetPath "story_images/slide3.svg"
               , altText = "Some text that describes the image."
               , messageText = Nothing
               }
             , { quoteText =
                     """Something interesting about trees.
                     """
-              , imagePath = AssetPath ("story_images/slide4.svg")
+              , imagePath = AssetPath "story_images/slide4.svg"
               , altText = "Some text that describes the image."
               , messageText = Nothing
               }
             ]
       }
-     ,{ id = 3
+    , { id = 3
       , title = "A story about rocks"
       , teaser = "The rocks are many and varied."
-      , teaserImgPath = AssetPath ("story_images/thumb_placeholder.png")
+      , teaserImgPath = AssetPath "story_images/thumb_placeholder.png"
       , teaserImgAltText = "Some text that describes the teaser image."
       , relatedInfo = [ 2, 5 ]
       , cards =
             [ { quoteText =
                     """Something inspiring about rocks.
                     """
-              , imagePath = AssetPath ("story_images/slide1.svg")
+              , imagePath = AssetPath "story_images/slide1.svg"
               , altText = "Some text that describes the image"
               , messageText = Nothing
               }
             , { quoteText =
                     """Something suprising about rocks.
                     """
-              , imagePath = AssetPath ("story_images/slide2.svg")
+              , imagePath = AssetPath "story_images/slide2.svg"
               , altText = "Some text that describes the image."
               , messageText = Just "Caption text."
               }
             , { quoteText =
                     """Something magical about rocks.
                     """
-              , imagePath = AssetPath ("story_images/slide3.svg")
+              , imagePath = AssetPath "story_images/slide3.svg"
               , altText = "Some text that describes the image."
               , messageText = Nothing
               }
             , { quoteText =
                     """Something interesting about rocks.
                     """
-              , imagePath = AssetPath ("story_images/slide4.svg")
+              , imagePath = AssetPath "story_images/slide4.svg"
               , altText = "Some text that describes the image."
               , messageText = Nothing
               }
             ]
       }
-  ]
+    ]

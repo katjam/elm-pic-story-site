@@ -3,17 +3,17 @@
 
 module Views.Nav exposing (view)
 
-import Html exposing (..)
+import Html exposing (Html, a, div, nav, span, text)
 import Html.Attributes exposing (class, href, rel, target)
 import Html.Events exposing (onClick)
 import Icon exposing (getIcon)
 import Messages exposing (Msg(..))
-import Model exposing (..)
+import Model exposing (Model)
 import Views.Config exposing (email, helpline, helplineDisplay)
 
 
 view : Model -> Html Msg
-view model =
+view _ =
     -- Contains Nav for phones - but text email and phone number for desktop and tablet.
     div [ class "nav-bar" ]
         [ div [ class "desktop-only" ]

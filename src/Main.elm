@@ -1,12 +1,12 @@
-module Main exposing (..)
+module Main exposing (main)
 
-import Messages exposing (Msg(..))
-import Model exposing (..)
+import Messages exposing (Msg(UrlChange))
+import Model exposing (Model)
 import Navigation
 import Route exposing (route)
 import Subscriptions
 import Update
-import UrlParser as Url exposing (parseHash)
+import UrlParser exposing (parseHash)
 import View
 
 
