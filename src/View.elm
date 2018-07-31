@@ -4,7 +4,7 @@ import Html exposing (Html, div)
 import Html.Attributes exposing (class)
 import Html.Attributes.Aria exposing (role)
 import Messages exposing (Msg)
-import Model exposing (..)
+import Model exposing (Model, pageSlug)
 import Views.Content
 import Views.Header
 import Views.Nav

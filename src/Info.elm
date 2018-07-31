@@ -6,7 +6,6 @@ import Html exposing (Html, a, article, div, h2, li, p, span, text)
 import Html.Attributes exposing (class, href)
 import Html.Events exposing (onClick)
 import Messages exposing (Msg(ButtonPress))
-import Views.Config exposing (helplineDisplay)
 
 
 type alias Info =
@@ -60,6 +59,7 @@ infoCard info =
         [ a
             [ class "card card--alternate info"
             , href ("#/info-to-help/" ++ info.slug)
+
             -- Record page source because same event will register from click to info from a story page.
             , onClick (ButtonPress "information" "view-single" info.slug True)
             ]
@@ -133,7 +133,6 @@ info =
       , infoText =
             [ "Write any time of day, whenever you have something to say."
             ]
-
       }
     , { id = 3
       , name = "What happens if I find a special rock?"
@@ -142,7 +141,6 @@ info =
       , infoText =
             [ "Find out more about it."
             ]
-
       }
     , { id = 4
       , name = "What happens if I break a branch off the tree?"
@@ -151,6 +149,5 @@ info =
       , infoText =
             [ "Try to make something useful out of it, like a walking stick."
             ]
-
       }
     ]

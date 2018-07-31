@@ -1,7 +1,7 @@
 module Update exposing (update)
 
 import Messages exposing (Msg(..), delay, gaEvent, hidePage, pageTimeoutSecs, updateAnalyticsEvent, updateAnalyticsPage)
-import Model exposing (..)
+import Model exposing (Model, pageSlug)
 import Navigation
 import Route exposing (Page(..))
 
@@ -13,23 +13,21 @@ update msg model =
         -- Action messages
         --
         ButtonPress category action label withPage ->
-            case withPage of
-                True ->
-                    ( model
-                    , updateAnalyticsEvent (gaEvent category action (label ++ "_" ++ pageSlug model.currentPage))
-                    )
+            if withPage then
+                ( model
+                , updateAnalyticsEvent (gaEvent category action (label ++ "_" ++ pageSlug model.currentPage))
+                )
+            else
+                ( model
+                , updateAnalyticsEvent (gaEvent category action label)
+                )
 
-                False ->
-                    ( model
-                    , updateAnalyticsEvent (gaEvent category action label)
-                    )
-
-        KeyPress position ->
+        KeyPress _ ->
             ( { model | idleTimerCount = model.idleTimerCount + 1 }
             , delay pageTimeoutSecs (IdleTimeout model.currentPage model.idleTimerCount)
             )
 
-        MouseAction code ->
+        MouseAction _ ->
             ( { model | idleTimerCount = model.idleTimerCount + 1 }
             , delay pageTimeoutSecs (IdleTimeout model.currentPage model.idleTimerCount)
             )
@@ -63,34 +61,32 @@ update msg model =
         DoTimeout ->
             -- The most recent idle Timer had hit the timelimit - kick off the Exit process.
             { model | currentPage = Timeout, doExit = True }
-                ! [ updateAnalyticsPage ("timeout-warning_" ++ (pageSlug model.idlePage))
+                ! [ updateAnalyticsPage ("timeout-warning_" ++ pageSlug model.idlePage)
                   , updateAnalyticsEvent (gaEvent "exit" "auto" ("warning_" ++ pageSlug model.idlePage))
                   , delay 15 (Exit False)
                   ]
 
         Exit force ->
-            case force of
-                False ->
-                    let
-                        cmds =
-                            if model.doExit == True then
-                                [ updateAnalyticsEvent (gaEvent "exit" "auto" ("timed-out_" ++ pageSlug model.idlePage))
-                                , Navigation.load "https://google.com"
-                                ]
-                            else
-                                [ Cmd.none ]
-                    in
-                        (model ! cmds)
+            if force then
+                model
+                    ! -- Hide the page immediately with JavaScript
+                      [ hidePage Nothing
+                      , updateAnalyticsEvent (gaEvent "exit" "force" ("exit-button_" ++ pageSlug model.currentPage))
 
-                True ->
-                    model
-                        ! -- Hide the page immediately with JavaScript
-                          [ hidePage (Nothing)
-                          , updateAnalyticsEvent (gaEvent "exit" "force" ("exit-button_" ++ pageSlug model.currentPage))
-
-                          -- Then redirect to Google
-                          , Navigation.load "https://google.com"
-                          ]
+                      -- Then redirect to Google
+                      , Navigation.load "https://google.com"
+                      ]
+            else
+                let
+                    cmds =
+                        if model.doExit then
+                            [ updateAnalyticsEvent (gaEvent "exit" "auto" ("timed-out_" ++ pageSlug model.idlePage))
+                            , Navigation.load "https://google.com"
+                            ]
+                        else
+                            [ Cmd.none ]
+                in
+                    (model ! cmds)
 
         GoBack ->
             -- We pressed go back to stop the timeout. Go back to the page we came from, stop exit, restart idle timer.

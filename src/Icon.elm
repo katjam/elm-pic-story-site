@@ -14,8 +14,8 @@ import Html.Attributes.Aria exposing (ariaHidden)
 getIcon : String -> Maybe String -> Html span
 getIcon name className =
     case className of
-        Just className ->
-            span [ class ("icon-" ++ name ++ " " ++ className), ariaHidden True ] []
+        Just aClass ->
+            span [ class ("icon-" ++ name ++ " " ++ aClass), ariaHidden True ] []
 
         Nothing ->
             span [ class ("icon-" ++ name), ariaHidden True ] []

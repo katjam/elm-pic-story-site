@@ -18,4 +18,4 @@ helpline =
 
 helplineDisplay : String
 helplineDisplay =
-    "00000" ++ "\x00A0" ++ "000" ++ "\x00A0" ++ "000"
+    "00000" ++ " " ++ "000" ++ " " ++ "000"

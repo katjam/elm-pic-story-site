@@ -3,8 +3,8 @@
 
 module Views.Pages.Privacy exposing (privacyContent)
 
-import Html exposing (..)
-import Html.Attributes exposing (class, href, src)
+import Html exposing (Html, div, h2, h3, li, p, text, ul)
+import Html.Attributes exposing (class)
 import Messages exposing (Msg(..))
 import Views.Footer exposing (footerContent)
 

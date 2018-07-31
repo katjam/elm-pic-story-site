@@ -4,7 +4,7 @@
 module Views.Footer exposing (footerContent)
 
 import Html exposing (Html, a, div, footer, text)
-import Html.Attributes exposing (class, href, src)
+import Html.Attributes exposing (class, href)
 import Html.Events exposing (onClick)
 import Messages exposing (Msg(..))
 

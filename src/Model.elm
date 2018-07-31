@@ -1,10 +1,10 @@
-module Model exposing (..)
+module Model exposing (Model, init, pageSlug)
 
 import Messages exposing (Msg(..), delay, pageTimeoutSecs)
 import Navigation
 import Route exposing (Page(..), route)
-import Slug exposing (Slug)
-import UrlParser as Url exposing (parseHash)
+import Slug
+import UrlParser exposing (parseHash)
 
 
 type alias Model =
@@ -23,8 +23,8 @@ init location =
                 Nothing ->
                     Home
 
-                Just page ->
-                    page
+                Just aPage ->
+                    aPage
     in
         ( Model page Home 0 False, delay pageTimeoutSecs (IdleTimeout page -1) )
 

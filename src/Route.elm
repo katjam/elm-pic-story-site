@@ -1,4 +1,4 @@
-module Route exposing (..)
+module Route exposing (Page(..), route)
 
 import UrlParser as Url exposing ((</>), s, int, string, top)
 

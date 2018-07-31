@@ -35,7 +35,7 @@ all =
                     (getInfo 500).name |> Expect.equal "Not found"
             ]
         , describe "Info slug"
-            [  test "Index of 1" <|
+            [ test "Index of 1" <|
                 \() ->
                     (getInfo 1).slug |> Expect.equal "helpline"
             , test "Index of 2" <|
@@ -61,7 +61,7 @@ all =
                     (getInfo 500).slug |> Expect.equal "not-found"
             ]
         , describe "Info icon"
-            [  test "Index of 1" <|
+            [ test "Index of 1" <|
                 \() ->
                     (getInfo 1).icon |> Expect.equal "call"
             , test "Index of 2" <|

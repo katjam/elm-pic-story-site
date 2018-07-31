@@ -17,6 +17,6 @@ all =
                     helpline |> Expect.equal "08000194400"
             , test "Helpline phone number display" <|
                 \() ->
-                    helplineDisplay |> Expect.equal ("08000" ++ "\x00A0" ++ "194" ++ "\x00A0" ++ "400")
+                    helplineDisplay |> Expect.equal ("08000" ++ " " ++ "194" ++ " " ++ "400")
             ]
         ]
